@@ -1,515 +1,1043 @@
-🌌 Project Seed: Adaptive Atmosphere Wallpaper
+🌌 Project Seed: Adaptive Atmosphere
 
-An open-source concept for context-aware ambient environments
-
-«What if your digital environment could quietly reflect the atmosphere of your thoughts?»
-
-Most dynamic wallpapers respond to external metrics: CPU usage, audio spectrum, time of day, weather, or system activity.
-
-Adaptive Atmosphere Wallpaper explores a different direction:
-
-«Instead of responding only to what the device is doing,
-what if the environment could respond to what the user is experiencing?»
-
-The goal is not to generate a new AI image every time the user's mood changes.
-
-The goal is to create a living ambient environment whose visual state gradually adapts to the context of human–AI interaction.
-
-The wallpaper should not demand attention.
-
-It should simply feel different.
+An open concept for context-aware ambient environments
 
 ---
 
-1. The Core Idea
+1. The Idea
 
-A user communicates naturally with an AI system.
+What if your digital environment could quietly adapt to the context of your life?
 
-The AI extracts a small set of abstract atmospheric parameters from the current context.
+Dynamic wallpapers typically respond to measurable things:
 
-Those parameters are passed to a local rendering engine.
+- CPU usage
+- Audio spectrum
+- Time
+- Weather
+- System activity
+- Application state
 
-The renderer then changes the environment through:
+Adaptive Atmosphere instead asks:
 
-- layered visual assets
-- shaders
-- particles
-- lighting
-- distortion
-- movement
-- color
-- environmental density
+«What if a digital environment could respond to context rather than merely activity?»
 
-The transition should happen gradually rather than instantaneously.
+The goal is to create a persistent ambient environment whose atmospheric character gradually adapts to what is happening around the user.
 
-Conceptually:
+It should not demand attention.
 
-Human Context
-      │
-      ▼
-  AI / Context
-   Analyzer
-      │
-      ▼
-Atmosphere State
-      │
-      ▼
-Local Render Engine
-      │
-      ▼
-Ambient Environment
+It should not announce what it knows.
 
-The important separation is:
+It should not become a spectacle.
 
-«The AI interprets.
-The renderer expresses.»
-
-The rendering layer should not need to understand the conversation itself.
+It should simply feel different when the context is different.
 
 ---
 
-2. Atmosphere, Not Emotion
+2. Core Architecture
 
-The system does not need to determine exactly what a person is feeling.
+             Context Sources
+        ┌────────┼────────┐
+        ↓             ↓              ↓
+       AI            Music          System
+        │             │              │
+        └────────┼────────┘
+                       ↓
+                 Context Fusion
+                       ↓
+             Context Interpretation
+                       ↓
+                Atmosphere State
+                       ↓
+                User Preferences
+                       ↓
+              Transition / Inertia
+                       ↓
+                     World
+                       ↓
+                    Renderer
+                       ↓
+              Ambient Environment
 
-Human states are too ambiguous for that.
+The fundamental principle is:
 
-Instead, the AI should translate context into a small set of visual dimensions.
+«The interpreter understands context.
+The renderer expresses atmosphere.»
 
-A possible initial model:
+The system therefore separates understanding from visualization.
+
+---
+
+3. What Is Atmosphere?
+
+Atmosphere is not an attempt to determine the user's exact emotion.
+
+It is not psychological diagnosis.
+
+It is not a claim about what the user is feeling.
+
+Instead, the system asks:
+
+«Given the current context, what kind of environment would fit here?»
+
+Atmosphere is therefore an environmental representation of context.
+
+Different interpretations can be valid.
+
+The same context does not necessarily produce one objectively correct atmosphere.
+
+---
+
+4. Atmosphere State
+
+The initial vocabulary consists of a small number of abstract dimensions.
+
+activity
+openness
+coherence
+density
+
+These dimensions describe the environment rather than the user.
+
+Activity
+
+How much dynamic activity the environment should express.
+
+Low:
+
+- slow
+- still
+- subtle
+- quiet
+
+High:
+
+- active
+- restless
+- energetic
+- rapidly changing
+
+---
+
+Openness
+
+How spatially expansive or enclosed the environment should feel.
+
+Low:
+
+- enclosed
+- near
+- intimate
+- spatially compressed
+
+High:
+
+- vast
+- distant
+- open
+- spacious
+
+---
+
+Coherence
+
+How organized and internally consistent the environment should be.
+
+Low:
+
+- irregular
+- organic
+- chaotic
+- turbulent
+
+High:
+
+- structured
+- rhythmic
+- ordered
+- stable
+
+---
+
+Density
+
+How much visual or environmental material should exist.
+
+Low:
+
+- empty
+- minimal
+- sparse
+
+High:
+
+- rich
+- layered
+- crowded
+- immersive
+
+These dimensions are intentionally abstract.
+
+They should describe meaning, not renderer-specific parameters.
+
+For example:
+
+activity = 0.8
+
+does not mean:
+
+particle_speed = 80%
+
+The World and Renderer decide how that atmospheric meaning should be expressed.
+
+---
+
+5. Neutrality Is a Valid State
+
+The environment does not always need to change.
+
+Sometimes the correct response to context is:
+
+«Do nothing.»
+
+A system that constantly changes risks becoming distracting.
+
+Therefore, neutrality is a legitimate atmospheric state.
+
+This allows the environment to remain stable when contextual evidence is weak, insignificant, or temporary.
+
+---
+
+6. Uncertainty and Confidence
+
+Context interpretation is inherently uncertain.
+
+The system should therefore be able to represent confidence.
+
+For example:
 
 {
-  "depth": 0.8,
-  "energy": 0.2,
-  "order": 0.7,
-  "palette": "DeepSea"
+  "activity": {
+    "value": 0.70,
+    "confidence": 0.42
+  }
 }
 
-depth — 0.0 → 1.0
+A low-confidence interpretation should generally result in a more conservative environmental response.
 
-Represents perceived conceptual or atmospheric depth.
+This creates an important principle:
 
-Possible visual effects:
+«Uncertainty should reduce aggression.»
 
-- environmental scale
-- darkness
-- fog
-- visual distance
-- water depth
-- spatial emptiness
-
-energy — 0.0 → 1.0
-
-Represents activity or intensity.
-
-Possible visual effects:
-
-- particle movement
-- wind
-- waves
-- animation speed
-- light movement
-- distortion
-
-order — 0.0 → 1.0
-
-Represents structure, stability, or visual regularity.
-
-Possible visual effects:
-
-- wave regularity
-- particle organization
-- geometric alignment
-- turbulence
-- environmental randomness
-
-palette
-
-A semantic mapping to a visual atmosphere.
-
-Examples:
-
-Minimal
-Cyber
-DeepSea
-Dusk
-Forest
-Abyss
-Space
-
-These parameters are only a starting point.
-
-Future implementations may add, remove, or redefine dimensions.
+The system should not make dramatic environmental changes based on weak evidence.
 
 ---
 
-3. The Renderer Should Be Local
+7. Context Fusion
 
-The system intentionally avoids real-time AI image generation.
-
-Instead, the visual world is constructed from pre-rendered or procedurally generated assets.
+Context can come from multiple sources.
 
 For example:
 
-Layer A — Background
-    Gradient
-    Starfield
-    Fog
-    Monochrome Abyss
+Conversation → low activity
+Music       → high activity
+Game        → high activity
+Time        → evening
+Weather     → rain
 
-Layer B — Midground
-    Clouds
-    Structures
-    Terrain
-    Central Motifs
+These signals should not necessarily compete directly.
 
-Layer C — Foreground
-    Water
-    Reflections
-    Particles
-    Floating Objects
+Instead:
 
-Atmosphere parameters control the behavior of these layers.
+Multiple Context Sources
+          ↓
+     Context Fusion
+          ↓
+ Unified Interpretation
+          ↓
+   Atmosphere State
 
-For example:
+Possible fusion mechanisms include:
 
-depth
- ├── fog density
- ├── environmental scale
- └── darkness
+- source priority
+- weighted contributions
+- source confidence
+- temporal relevance
+- user preferences
+- explicit user overrides
 
-energy
- ├── particle velocity
- ├── wave intensity
- └── animation speed
+The exact fusion algorithm is intentionally left open.
 
-order
- ├── turbulence
- ├── ripple regularity
- └── particle distribution
+The important architectural boundary is:
 
-palette
- └── color mapping
-
-This allows the visual environment to remain lightweight while still feeling dynamic.
+«Multiple sources should be able to contribute to one atmospheric interpretation.»
 
 ---
 
-4. Transition Is Part of the Experience
+8. User Preferences
 
-A change in atmospheric state should not normally happen instantly.
+Context interpretation should not have absolute authority.
 
-If:
+The user should always be able to constrain the resulting environment.
 
-energy = 0.2
-
-suddenly becomes:
-
-energy = 0.9
-
-the user may simply perceive a parameter change.
-
-Instead, the renderer should interpolate between states.
+Context
+   ↓
+AI Interpretation
+   ↓
+Atmosphere
+   ↓
+User Constraints / Preferences
+   ↓
+Effective Atmosphere
+   ↓
+Renderer
 
 For example:
 
-Current State
-      │
-      │
-      ▼
-  Interpolation
-      │
-      ▼
-Target State
+{
+  "interpreted": {
+    "activity": 0.85
+  },
+  "user_limit": {
+    "activity_max": 0.40
+  },
+  "effective": {
+    "activity": 0.40
+  }
+}
 
-A simple implementation could use linear interpolation:
+The principle is:
 
-lerp(current, target, t)
-
-with a transition duration such as two seconds.
-
-However, different parameters may eventually benefit from different transition curves.
-
-The objective is not mathematical elegance.
-
-It is continuity.
-
-The environment should feel like it is changing naturally rather than switching presets.
+«The system adapts to the user.
+The user should not have to adapt to the system.»
 
 ---
 
-5. Atmospheric Inertia
+9. Change Threshold
 
-An important extension of the concept is that the environment does not necessarily need to forget its previous state immediately.
+Atmospheric Inertia and Change Threshold solve different problems.
 
-A person's context is not a sequence of unrelated snapshots.
+Change Threshold
 
-It has continuity.
+Answers:
 
-Therefore, an implementation may maintain an Atmosphere State:
-
-Previous State
-      │
-      ▼
-Current Context
-      │
-      ▼
-New Target State
-      │
-      ▼
-Gradual Transition
-
-This creates the possibility of atmospheric inertia.
+«Should the environment change at all?»
 
 For example:
 
-calm
+Current activity = 0.40
+New activity     = 0.42
+
+The system may decide that the difference is too small to matter.
+
+But:
+
+Current activity = 0.40
+New activity     = 0.85
+
+may justify a transition.
+
+---
+
+10. Atmospheric Inertia
+
+Once the system decides to change, it should avoid abrupt transitions.
+
+For example:
+
+Calm
   ↓
-deep
+Slightly active
   ↓
-reflective
+Moderately active
   ↓
-relieved
-  ↓
-lighter
+Energetic
 
 rather than:
 
-calm
+Calm
   ↓
-INSTANTLY HAPPY
+Energetic
 
-This is optional for an MVP, but may become an important part of the experience.
+Atmospheric Inertia provides continuity.
 
----
+The purpose is not mathematical sophistication.
 
-6. Communication Layer
-
-The communication mechanism should remain replaceable.
-
-Possible implementations include:
-
-- clipboard observation
-- local HTTP API
-- WebSocket
-- webhook
-- operating-system integration
-- application plugins
-- direct LLM API integration
-
-For an MVP, even a simple protocol is sufficient:
-
-[WP_DATA:{
-  "depth":0.8,
-  "energy":0.2,
-  "order":0.7,
-  "palette":"DeepSea"
-}]
-
-The communication layer should ideally remain independent from the rendering engine.
-
-This means the renderer could eventually receive atmospheric states from many sources:
-
-ChatGPT
-Gemini
-Claude
-Grok
-Local LLM
-Music
-Games
-User input
-Sensors
-Time
-Weather
-Other applications
-
-The source does not matter.
-
-If it can produce an Atmosphere State, the renderer can interpret it.
+The purpose is to make the environment feel like it has continuity rather than discrete states.
 
 ---
 
-7. Suggested MVP
+11. New Targets Replace Old Targets
 
-Do not begin by building the entire system.
+Suppose the environment is transitioning:
 
-Start with one environment.
+A → B
 
-For example:
+Then a new context produces target "C".
 
-Deep Sea
+The system should generally transition from the current interpolated state toward "C".
 
-Only three continuous parameters:
+A ─────────→ B
+       ↘
+        C
 
-depth
-energy
-order
+rather than:
 
-And one palette:
+A → B → C
 
-DeepSea
+This prevents the environment from becoming trapped in outdated context.
 
-Build:
-
-- water surface
-- volumetric fog
-- distant light
-- floating particles
-- subtle distortion
-- reflections
-
-Then connect the parameters.
-
-The first proof of concept should answer only one question:
-
-«Can a small number of abstract parameters make the same environment feel meaningfully different?»
-
-If yes, the concept has been demonstrated.
-
-Everything else can come later.
+The environment should have memory without being controlled by history.
 
 ---
 
-8. Design Principles
+12. Temporal Scope
 
-01 — Ambient, not attention-seeking
+Not every piece of context should have the same lifespan.
 
-The wallpaper should complement the user rather than compete for attention.
+Atmospheric information can exist at different temporal scales.
 
-02 — Interpretation, not diagnosis
+Momentary
 
-The system should interpret conversational context as an atmosphere, not claim to know the user's psychological state.
+Short-lived context.
 
-03 — AI should be replaceable
+Examples:
 
-The renderer should not depend on a particular AI provider.
+- sudden activity
+- temporary sound
+- a short interaction
 
-04 — Rendering should be local whenever possible
+Session
 
-AI inference and network communication should not be part of the real-time rendering loop.
+Context associated with an ongoing activity.
 
-05 — Continuity over spectacle
+Examples:
 
-Smooth transitions are more important than dramatic effects.
+- working
+- gaming
+- studying
+- creating
 
-06 — Small parameter space
+Persistent
 
-A few meaningful dimensions are preferable to hundreds of opaque AI-generated values.
+Longer-term preferences.
 
-07 — The environment is the product
+Examples:
 
-The AI itself should not become the visual focus.
+- preferred atmosphere
+- preferred world
+- preferred palette
+- preferred level of activity
+
+This distinction prevents temporary context from becoming accidental long-term memory.
 
 ---
 
-9. Possible Future Directions
+13. World vs Atmosphere
 
-The initial concept is intentionally small.
+A World is not an Atmosphere.
 
-It could eventually evolve toward:
+A World defines the environment in which atmospheric properties are expressed.
 
-Multiple Atmosphere Worlds
+Examples:
 
 Deep Sea
 Forest
-Dusk
 Space
-Abyss
-Rain
-Cyber
 Desert
+Rain
+Cyber City
+Abyss
 
-Each world interprets the same abstract parameters differently.
+Atmosphere determines how that world behaves.
+
+The same atmospheric state can therefore be expressed by many different worlds.
 
 For example:
 
-energy ↑
+Atmosphere
+     ↓
+Deep Sea
 
-Deep Sea → stronger currents
-Forest   → stronger wind
-Space    → faster particles
-Cyber    → increased light activity
+may produce:
 
-The same atmosphere can therefore produce completely different environments.
+- stronger currents
+- deeper water
+- more particles
+- irregular waves
 
----
+while:
 
-Developer-Created Atmosphere Packs
+Atmosphere
+     ↓
+Forest
 
-A standardized Atmosphere State could allow independent creators to build their own environments.
+may produce:
 
-Atmosphere API
-       │
-       ├── Deep Sea Pack
-       ├── Forest Pack
-       ├── Space Pack
-       ├── Cyber Pack
-       └── ...
+- stronger wind
+- greater foliage movement
+- wider visibility
+- different movement rhythms
 
-This could eventually turn the project from a single wallpaper into an ecosystem.
-
----
-
-10. The Deeper Idea
-
-This project is not fundamentally about wallpapers.
-
-It is an experiment in ambient computing.
-
-Digital environments have traditionally been passive:
-
-«We look at them.»
-
-Dynamic environments became reactive:
-
-«They respond to system activity.»
-
-This project explores another possibility:
-
-«They respond to context.»
-
-Not by speaking.
-
-Not by generating notifications.
-
-Not by asking for attention.
-
-But by quietly changing the space around us.
-
-Perhaps the most interesting result would be a system where the user eventually stops thinking about the AI behind it.
-
-They simply notice that:
-
-«the room feels different today.»
+This separation allows Worlds to be created independently from context interpretation.
 
 ---
 
-License
+14. Renderer Independence
 
-This project seed is dedicated to the public domain under the CC0 1.0 Universal dedication.
+The intended abstraction is:
 
-Anyone is free to:
+Atmosphere
+     ↓
+World-specific Mapping
+     ↓
+Renderer Parameters
+     ↓
+Visual Output
 
-- use it
+The Atmosphere Protocol describes meaning.
+
+The World defines interpretation.
+
+The Renderer defines implementation.
+
+This allows the same atmospheric vocabulary to work with:
+
+- 2D scenes
+- 3D environments
+- shaders
+- game engines
+- web-based environments
+- desktop wallpaper engines
+- future rendering technologies
+
+---
+
+15. Local Rendering
+
+The system should prefer continuous rendering to happen locally.
+
+Instead of repeatedly asking an AI to generate every frame:
+
+Context / AI
+     ↓
+Occasional State Update
+     ↓
+Local Renderer
+     ↓
+Continuous Real-Time Animation
+
+This provides:
+
+- lower latency
+- lower network dependency
+- predictable performance
+- greater privacy
+- lower API usage
+- offline resilience
+
+AI should interpret context.
+
+It should not be responsible for drawing every frame.
+
+---
+
+16. Replaceable Communication Layer
+
+The communication mechanism should remain independent from the Atmosphere Protocol.
+
+Possible implementations include:
+
+- local HTTP
+- WebSocket
+- webhook
+- application plugins
+- operating system integration
+- direct LLM integration
+- clipboard
+- local files
+- IPC
+
+For example:
+
+{
+  "version": "0.2",
+  "atmosphere": {
+    "activity": 0.25,
+    "openness": 0.80,
+    "coherence": 0.70,
+    "density": 0.35
+  }
+}
+
+The important abstraction is:
+
+Any Source
+    ↓
+Atmosphere State
+    ↓
+Any Compatible World
+
+The protocol should not depend on one particular AI, application, or communication method.
+
+---
+
+17. Privacy by Architecture
+
+The renderer does not need to know the original context.
+
+For example:
+
+Conversation
+     ↓
+Interpreter
+     ↓
+{
+  "activity": 0.30,
+  "openness": 0.80
+}
+     ↓
+Renderer
+
+The renderer does not need to know:
+
+- what was said
+- who said it
+- which application produced it
+- what personal information was involved
+
+This creates a useful architectural boundary:
+
+«Raw context can remain at the interpretation layer.
+The rendering layer only receives abstract atmospheric information.»
+
+---
+
+18. Reflection, Not Manipulation
+
+Adaptive Atmosphere is intended as a reflective environment.
+
+It should not optimize for:
+
+- making the user happier
+- making the user sadder
+- increasing emotional stimulation
+- increasing engagement
+- keeping the user watching
+- influencing decisions
+
+The environment may naturally affect perception.
+
+But emotional influence should not be the optimization target.
+
+The goal is adaptation, not manipulation.
+
+---
+
+19. Feedback Loops
+
+There is a potential feedback loop:
+
+Context
+   ↓
+Atmosphere
+   ↓
+Environment
+   ↓
+User Perception
+   ↓
+New Context
+   ↓
+Atmosphere
+
+An uncontrolled system could amplify itself.
+
+For example:
+
+Negative Context
+      ↓
+Darker Environment
+      ↓
+More Negative Context
+      ↓
+Even Darker Environment
+
+Possible safeguards include:
+
+- bounded parameters
+- dampening
+- user limits
+- confidence weighting
+- conservative transitions
+- maximum rate of change
+- neutral states
+
+The environment should respond to context without becoming an uncontrolled amplifier of it.
+
+---
+
+20. Design Principles
+
+1. Ambient, not attention-seeking
+
+The environment should exist in the background rather than constantly demanding attention.
+
+2. Interpretation, not diagnosis
+
+The system interprets context without claiming to know the user's psychological state.
+
+3. Atmosphere is an abstraction
+
+Atmosphere should describe meaning rather than implementation details.
+
+4. AI is replaceable
+
+The architecture should work with different AI systems or without AI.
+
+5. Sources are replaceable
+
+Different applications and sensors should be able to provide context.
+
+6. User control comes first
+
+Users should be able to constrain, disable, or override adaptation.
+
+7. Neutrality is valid
+
+Not every contextual change needs a visual response.
+
+8. Uncertainty should reduce aggression
+
+Weak evidence should result in conservative adaptation.
+
+9. Continuity over spectacle
+
+Transitions should feel natural rather than flashy.
+
+10. Local rendering whenever possible
+
+Continuous visual computation should preferably happen locally.
+
+11. Small vocabulary, meaningful dimensions
+
+A small number of well-defined dimensions is preferable to a huge collection of ambiguous parameters.
+
+12. The environment is the product
+
+AI interpretation is a component.
+
+The actual experience is the environment.
+
+---
+
+21. Minimal Viable Experiment
+
+The first prototype does not need AI.
+
+Start with:
+
+One World
++
+Four Atmosphere Dimensions
++
+Manual State Input
++
+Smooth Transition
+
+For example, a Deep Sea world could use:
+
+- water movement
+- fog
+- distant light
+- particles
+- subtle distortion
+- reflections
+
+Manual state:
+
+{
+  "activity": 0.20,
+  "openness": 0.80,
+  "coherence": 0.70,
+  "density": 0.30
+}
+
+Then change to:
+
+{
+  "activity": 0.80,
+  "openness": 0.50,
+  "coherence": 0.30,
+  "density": 0.70
+}
+
+The first experiment asks:
+
+«Can a small number of abstract atmospheric dimensions make the same world meaningfully feel different?»
+
+If the answer is no, adding AI will not solve the fundamental problem.
+
+---
+
+22. AI Integration
+
+Only after the renderer works independently should AI interpretation be introduced.
+
+For example:
+
+Context:
+
+«The user is quietly working through a difficult technical problem.»
+
+Possible interpretation:
+
+{
+  "activity": 0.25,
+  "openness": 0.70,
+  "coherence": 0.85,
+  "density": 0.25,
+  "confidence": 0.72
+}
+
+Another valid interpretation could be:
+
+{
+  "activity": 0.40,
+  "openness": 0.60,
+  "coherence": 0.80,
+  "density": 0.30,
+  "confidence": 0.61
+}
+
+The architecture does not require different AI systems to produce identical results.
+
+It only requires them to share a common semantic vocabulary.
+
+---
+
+23. Long-Term Direction: Atmosphere Protocol
+
+The long-term goal is not simply an AI wallpaper.
+
+It is a general protocol for translating context into ambient environments.
+
+Context
+   ↓
+Atmosphere State
+   ↓
+World
+   ↓
+Environment
+
+This could eventually support an ecosystem of:
+
+Context Providers
+
+- AI
+- music
+- games
+- weather
+- calendar
+- sensors
+- applications
+- operating systems
+
+Atmosphere Interpreters
+
+- GPT
+- Claude
+- Gemini
+- local LLMs
+- rule-based systems
+- custom models
+
+Worlds
+
+- Deep Sea
+- Forest
+- Space
+- Desert
+- Cyber City
+- Abstract environments
+
+Renderers
+
+- 2D
+- 3D
+- shaders
+- Web
+- game engines
+- desktop environments
+
+Each component can potentially be replaced independently.
+
+---
+
+24. Atmosphere Packs
+
+A future ecosystem could allow developers and artists to create independent Atmosphere Worlds.
+
+Instead of every developer solving:
+
+«How do I understand the user's context?»
+
+they can focus on:
+
+«How does my world express an atmosphere?»
+
+For example, the same Atmosphere State could be interpreted by:
+
+Deep Sea Pack
+Forest Pack
+Space Pack
+Cyber City Pack
+Minimalist Abstract Pack
+
+This separates context understanding from creative expression.
+
+---
+
+25. Ambient Computing
+
+Adaptive Atmosphere can be viewed as an experiment in ambient computing.
+
+Digital environments can be understood as progressing from:
+
+Passive
+  ↓
+Reactive
+  ↓
+Contextual
+
+Passive
+
+The environment exists, but does not respond.
+
+Reactive
+
+The environment responds to measurable activity.
+
+Contextual
+
+The environment responds to meaningful context.
+
+The important difference is that contextual environments do not need to speak, notify, or demand attention.
+
+They can simply change the space around us.
+
+Ideally, the user eventually notices:
+
+«"The room feels different today."»
+
+---
+
+26. What This Project Is Not
+
+Adaptive Atmosphere is not intended to be:
+
+- an emotion detector
+- a psychological diagnostic system
+- an AI-generated wallpaper slideshow
+- a notification system
+- an engagement optimization system
+- a visualizer that reacts to every input
+- a replacement for human emotional awareness
+
+It is an experiment in creating digital environments that can quietly adapt to context.
+
+---
+
+27. The Seed Is Not a Specification
+
+This document is intentionally not a final specification.
+
+The following may change:
+
+- atmosphere dimensions
+- terminology
+- protocol structure
+- context fusion methods
+- rendering architecture
+- communication mechanisms
+- AI integration
+- user preference systems
+
+The important thing to preserve is not the exact implementation.
+
+The important thing is the architectural direction:
+
+Context
+   ↓
+Interpretation
+   ↓
+Atmosphere
+   ↓
+World
+   ↓
+Environment
+
+Better abstractions should be allowed to replace older ones.
+
+The seed matters more than the first implementation.
+
+---
+
+28. Core Seed
+
+At its smallest form:
+
+Context
+   ↓
+Interpretation
+   ↓
+Atmosphere
+   ↓
+World
+   ↓
+Environment
+
+The central question is:
+
+«Given what is happening, what kind of environment would belong here?»
+
+No notification.
+
+No diagnosis.
+
+No spectacle.
+
+Just atmosphere.
+
+---
+
+29. Closing Thought
+
+The goal is not to make the environment smarter.
+
+The goal is to make digital space feel more alive without making it more demanding.
+
+---
+
+30. License
+
+This project concept and its architectural ideas are dedicated to the public domain under the CC0 1.0 Universal dedication, to the extent permitted by law.
+
+You are free to:
+
+- use the concept
 - modify it
-- expand it
 - implement it
+- expand it
 - redistribute it
-- commercialize it
+- build commercial products from it
 - create derivative works
+- combine it with other projects
 
-No permission is required.
+Attribution is appreciated but not required.
 
-Attribution to the original author is appreciated but not required.
+The purpose of this seed is to allow the idea to evolve beyond its original implementation and creator.
 
 ---
 
-«This is a seed, not a finished product.
+Adaptive Atmosphere
 
-If you build it, change it.
-If you find a better architecture, replace it.
-If the idea grows into something different, let it grow.
-
-And if you build this,
-
-please make the world a bit more reflective.»
+«Context → Interpretation → Atmosphere → World → Environment»
